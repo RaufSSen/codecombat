@@ -56,6 +56,11 @@ const compose = (...fns) => initial => fns.reduce((v, fn) => fn(v), initial)
  */
 
 /**
+ * @typedef {Object} Sound
+ * @property {string} mp3
+ * @property {string} ogg
+ */
+/**
  * @typedef {Object} DialogNode
  * @property {string} text - The text to display
  * @property {Point2d} textLocation - The point information
@@ -278,6 +283,17 @@ const backgroundObject = triggers => {
 }
 
 /**
+ * @param {ShotSetup} shotSetup
+ * @returns {Sound} possibly contains `mp3` or `ogg` property.
+ */
+const setupMusic = shotSetup => {
+  if (!(shotSetup || {}).music) {
+    return
+  }
+  return shotSetup.music
+}
+
+/**
  * @param {Object} triggers
  * @returns {undefined|number} Delay if it exists.
  */
@@ -321,3 +337,9 @@ export const getBackgroundObject = compose(triggers, backgroundObject)
  * @returns {number|undefined} the delay before removing the background object.
  */
 export const getClearBackgroundObject = compose(triggers, clearBackgroundObject)
+
+/**
+ * @param {Shot} shot
+ * @returns {string|undefined}
+ */
+export const getSetupMusic = compose(shotSetup, setupMusic)

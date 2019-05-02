@@ -3,6 +3,7 @@ import Loader from './Loader'
 import { parseShot } from './Command/CinematicParser'
 import CommandRunner from './Command/CommandRunner'
 import DialogSystem from './DialogSystem'
+import { SoundSystem } from './sound-system/SoundSystem';
 
 const createjs = require('lib/createjs-parts')
 const LayerAdapter = require('lib/surface/LayerAdapter')
@@ -44,6 +45,7 @@ export class CinematicController {
     // TODO: Will be moved to camera commands.
     this.systems.camera.zoomTo({ x: 0, y: 0 }, 6, 0)
     this.systems.loader = new Loader({ data: cinematicData })
+    this.systems.sound = new SoundSystem()
 
     this.systems.dialogSystem = new DialogSystem({
       canvasDiv,

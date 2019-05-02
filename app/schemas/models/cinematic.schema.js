@@ -56,7 +56,8 @@ const ShotSetup = c.object({
 }, {
   rightThangType: CharacterSchema('Right Character'),
   leftThangType: CharacterSchema('Left Character'),
-  backgroundArt: ThangTypeSchema('Background Art', 'The rasterized image to place on the background')
+  backgroundArt: ThangTypeSchema('Background Art', 'The rasterized image to place on the background'),
+  music: c.sound()
 })
 
 const DialogNode = c.object({
