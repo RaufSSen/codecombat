@@ -12,7 +12,9 @@ import {
   getBackgroundSlug,
   exitCharacter,
   getTextPosition,
-  getText
+  getText,
+  getSetupMusic,
+  getSoundEffects
 } from '../../../app/schemas/selectors/cinematic'
 
 /**
@@ -143,6 +145,22 @@ describe('Cinematic', () => {
       const result2 = getText(shotFixture2.dialogNodes[0])
       expect(result2).toBeUndefined()
     })
+
+    it('getSoundEffects', () => {
+      const result = getSoundEffects(shotFixture1.dialogNodes[0])
+      expect(result).toEqual([ { sound: { mp3: 'path/music' }, triggerStart: 0 } ])
+
+      const result2 = getSoundEffects(shotFixture2.dialogNodes[0])
+      expect(result2).toEqual([ { sound: { mp3: 'path/music' }, triggerStart: 30 } ])
+    })
+
+    it('getSetupMusic', () => {
+      const result = getSetupMusic(shotFixture1)
+      expect(result).toEqual({ ogg: 'path/music', mp3: 'path/music/mp3' })
+
+      const result2 = getSetupMusic(shotFixture2)
+      expect(result2).toBeUndefined()
+    })
   })
 })
 
@@ -193,6 +211,10 @@ var shotFixture1 = {
       },
       scaleX: 0.3,
       scaleY: 0.2
+    },
+    music: {
+      ogg: 'path/music',
+      mp3: 'path/music/mp3'
     }
   },
   dialogNodes: [
@@ -211,7 +233,14 @@ var shotFixture1 = {
         },
         clearBackgroundObject: {
           triggerStart: 7331
-        }
+        },
+        soundFxTriggers: [
+          {
+            sound: {
+              mp3: 'path/music'
+            }
+          }
+        ]
       }
     },
     {
@@ -244,7 +273,16 @@ var shotFixture2 = {
   },
   dialogNodes: [
     {
-      triggers: { },
+      triggers: {
+        soundFxTriggers: [
+          {
+            sound: {
+              mp3: 'path/music'
+            },
+            triggerStart: 30
+          }
+        ]
+      },
       speaker: 'left',
       textLocation: {
         x: 40,
